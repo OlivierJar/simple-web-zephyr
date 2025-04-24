@@ -198,6 +198,7 @@ int main(void)
 	bt_ready();
 
     /* Loop for the breathing/fading lights */
+	init_led();
 	while (1) {
 		k_msleep(SLEEP_MS);
 		if (breathing_light != BREATHING_LIGHT_OFF) {
@@ -214,5 +215,7 @@ int main(void)
 				state ^= 0x10;
 			}
 		} 
+		led_toggle();
+
 	}
 }

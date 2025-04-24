@@ -5,5 +5,6 @@
 
 int rgb_led_init();
 void rgb_led_set(uint8_t r, uint8_t g, uint8_t b);
-
+void init_led();
+void led_toggle();
 #endif /* __RGB_LED_H_ */
