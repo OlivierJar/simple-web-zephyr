@@ -36,7 +36,6 @@ enum breathing_light_mask_values {
     BREATHING_LIGHT_CYAN = 0x6,
     BREATHING_LIGHT_WHITE = 0x7,
 };
-
 int8_t breathing_light = BREATHING_LIGHT_BLUE; // blue
 
 static void set_rgb_cb(uint8_t r, uint8_t g, uint8_t b) {
@@ -47,6 +46,7 @@ static void set_rgb_cb(uint8_t r, uint8_t g, uint8_t b) {
 	rgb_led_set(r, g, b);
 }
 static void toggle_led_fun() {
+	printk("LED TOGGLED");
 	toggle_led();
 }
 

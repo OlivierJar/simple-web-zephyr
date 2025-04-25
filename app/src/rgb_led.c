@@ -43,7 +43,7 @@ void rgb_led_set(uint8_t r, uint8_t g, uint8_t b)
         printk("Error setting RGB PWM\n");
     }
 }
-void init_led(){
+int init_led(){
     if (!gpio_is_ready_dt(&led)) {
 		return -ENODEV;
 	}
@@ -55,4 +55,5 @@ void init_led(){
 void toggle_led(){
     int ret;
     ret = gpio_pin_toggle_dt(&led);
+    
 }

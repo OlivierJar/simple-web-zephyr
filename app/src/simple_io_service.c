@@ -61,7 +61,7 @@ static ssize_t write_rgb(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 static void toggle_led_instance(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 	const void *buf, uint16_t len, uint16_t offset,	uint8_t flags){
 		uint8_t val;
-		printk("Toggling LED2");
+		printk("%s: len=%zu, offset=%u\n", __func__, len, offset);
 		if (offset != 0) {
 			return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
 		} else if (len != sizeof(val)) {
