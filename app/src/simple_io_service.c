@@ -28,7 +28,7 @@ static const struct bt_uuid_128 simple_io_id_uuid = BT_UUID_INIT_128(
 static const struct bt_uuid_128 simple_io_button_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x030de9cf, 0xce4b, 0x44d0, 0x8aa2, 0x1db9185dc069));
 static const struct bt_uuid_128 simple_io_toggle_uuid = BT_UUID_INIT_128(
-		BT_UUID_128_ENCODE(0xcfe1c61d, 0x25d6, 0x4b43, 0xbe51, 0xddede653f018));
+	BT_UUID_128_ENCODE(0xcfe1c61d, 0x25d6, 0x4b43, 0xbe51, 0xddede653f018));
 // cfe1c61d-25d6-4b43-be51-ddede653f018
 static struct bt_simple_io_cb *simple_io_cbs;
 
@@ -61,9 +61,11 @@ static ssize_t write_rgb(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 static void toggle_led_instance(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 	const void *buf, uint16_t len, uint16_t offset,	uint8_t flags){
 		uint8_t val;
+		printk("Toggling LED2");
 		if (offset != 0) {
 			return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
 		} else if (len != sizeof(val)) {
+			printk("Wrong ize input for toggle");
 			return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
 		}
 	
@@ -129,11 +131,17 @@ BT_GATT_SERVICE_DEFINE(simple_io_svc,
                 BT_GATT_PERM_WRITE,
                 NULL, write_rgb, NULL),
     BT_GATT_CUD("RGB", BT_GATT_PERM_READ),
+	BT_GATT_CHARACTERISTIC(&simple_io_toggle_uuid.uuid,
+				BT_GATT_CHRC_WRITE,
+				BT_GATT_PERM_WRITE,
+				NULL,toggle_led_instance,NULL),
+	BT_GATT_CUD("LED",BT_GATT_PERM_READ),		
     BT_GATT_CHARACTERISTIC(&simple_io_id_uuid.uuid,
 				BT_GATT_CHRC_WRITE,
                 BT_GATT_PERM_WRITE,
                 NULL, write_id, NULL),
     BT_GATT_CUD("Device ID", BT_GATT_PERM_READ),
+
 );
 
 int simple_io_button_notify(uint8_t pressed)

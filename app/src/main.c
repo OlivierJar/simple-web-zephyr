@@ -47,7 +47,6 @@ static void set_rgb_cb(uint8_t r, uint8_t g, uint8_t b) {
 	rgb_led_set(r, g, b);
 }
 static void toggle_led_fun() {
-	breathing_light = BREATHING_LIGHT_OFF; // Disable breathing light when setting RGB color
 	toggle_led();
 }
 

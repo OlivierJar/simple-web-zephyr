@@ -229,7 +229,7 @@ const init = () => {
     document.querySelector('#connect').addEventListener('click', scan);
     document.querySelector('#colorpicker').addEventListener('input', handleColorPicker);
     statusElement = document.querySelector('#status');
-    document.querySelector("#toggle").addEventListener("Toggle",toggle)
+    document.querySelector("#toggle").addEventListener("Toggle",handleToggle)
 }
 
 window.addEventListener('load', init);
