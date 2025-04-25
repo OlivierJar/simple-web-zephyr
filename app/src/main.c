@@ -46,9 +46,14 @@ static void set_rgb_cb(uint8_t r, uint8_t g, uint8_t b) {
 
 	rgb_led_set(r, g, b);
 }
+static void toggle_led_fun() {
+	breathing_light = BREATHING_LIGHT_OFF; // Disable breathing light when setting RGB color
+	toggle_led();
+}
 
 struct bt_simple_io_cb io_cbs = {
 	.set_rgb = set_rgb_cb,
+	.toggle_led = toggle_led_fun,
 };
 
 static void bt_ready(void)
@@ -215,7 +220,6 @@ int main(void)
 				state ^= 0x10;
 			}
 		} 
-		led_toggle();
 
 	}
 }

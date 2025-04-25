@@ -138,6 +138,8 @@
         <h2 id="status">Not Connected</h2>
         <div class="align-horizontal">
             <button id="connect">CONNECT</button>
+            <button id="toggle">TOGGLE</button>
+
             <input id="colorpicker" type="color">
         </div>
     </div>
@@ -150,16 +152,22 @@ const SIMPLE_IO_SERVICE = '13e779a0-bb72-43a4-a748-9781b918258c';
 const SIMPLE_IO_RGB_CHAR = '4332aca6-6d71-4173-9945-6653b6c684a0';
 const SIMPLE_IO_ID_CHAR = 'b749d964-4efb-408a-82ad-7495e8af8d6d';
 const SIMPLE_IO_BUTTON_CHAR = '030de9cf-ce4b-44d0-8aa2-1db9185dc069';
+const SIMPLE_IO_TOGGLE_CHAR = 'cfe1c61d-25d6-4b43-be51-ddede653f018';
+
 
 let rgbCharacteristic = null;
 let statusElement = null;
-
+let ToggleStatus = 0
 const setRGB = (r, g, b) => {
     if (rgbCharacteristic) {
         rgbCharacteristic.writeValueWithoutResponse(new Uint8Array([r, g, b]));
     }
 }
-
+const handleToggle = () => {
+    if (ToggleStatus){
+        ToggleStatus.writeValueWithoutResponse(new Number(1))
+    }
+}
 const hexToRGB = hex => hex.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
 
 const handleColorPicker = (evt) => {
@@ -179,6 +187,9 @@ const startButtonNotifications = async (service) => {
 
 const fetchRGBCharacteristic = async (service) => {
     rgbCharacteristic = await service.getCharacteristic(SIMPLE_IO_RGB_CHAR);
+}
+const fetchToggleStatus = async (service) => {
+    ToggleStatus = await service.getCharacteristic(SIMPLE_IO_TOGGLE_CHAR)
 }
 
 const openDevice = async (device) => {
@@ -218,7 +229,7 @@ const init = () => {
     document.querySelector('#connect').addEventListener('click', scan);
     document.querySelector('#colorpicker').addEventListener('input', handleColorPicker);
     statusElement = document.querySelector('#status');
-
+    document.querySelector("#toggle").addEventListener("Toggle",toggle)
 }
 
 window.addEventListener('load', init);

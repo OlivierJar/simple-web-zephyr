@@ -52,7 +52,7 @@ void init_led(){
     }
 
 }
-void led_toggle(){
+void toggle_led(){
     int ret;
     ret = gpio_pin_toggle_dt(&led);
 }

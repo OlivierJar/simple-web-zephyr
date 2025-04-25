@@ -27,7 +27,9 @@ static const struct bt_uuid_128 simple_io_id_uuid = BT_UUID_INIT_128(
 
 static const struct bt_uuid_128 simple_io_button_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x030de9cf, 0xce4b, 0x44d0, 0x8aa2, 0x1db9185dc069));
-
+static const struct bt_uuid_128 simple_io_toggle_uuid = BT_UUID_INIT_128(
+		BT_UUID_128_ENCODE(0xcfe1c61d, 0x25d6, 0x4b43, 0xbe51, 0xddede653f018));
+// cfe1c61d-25d6-4b43-be51-ddede653f018
 static struct bt_simple_io_cb *simple_io_cbs;
 
 void bt_simple_io_register_cb(struct bt_simple_io_cb *cb)
@@ -56,6 +58,24 @@ static ssize_t write_rgb(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
     return len;
 }
+static void toggle_led_instance(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+	const void *buf, uint16_t len, uint16_t offset,	uint8_t flags){
+		uint8_t val;
+		if (offset != 0) {
+			return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
+		} else if (len != sizeof(val)) {
+			return BT_GATT_ERR(BT_ATT_ERR_INVALID_ATTRIBUTE_LEN);
+		}
+	
+		(void)memcpy(&val, buf, len);
+	
+		if (simple_io_cbs->toggle_led) {
+			simple_io_cbs->toggle_led();
+		}
+	
+		return len;
+
+	}
 
 static ssize_t write_id(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 			  const void *buf, uint16_t len, uint16_t offset,

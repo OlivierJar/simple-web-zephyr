@@ -20,9 +20,11 @@ extern "C" {
 
 typedef void (*simple_io_set_rgb_cb)(uint8_t r, uint8_t g, uint8_t b);
 // typedef void (*simple_io_name_cb)(int16_t vx, int16_t vy);
+typedef void (*simple_io_toggle_led)();
 
 struct bt_simple_io_cb {
     simple_io_set_rgb_cb    set_rgb;
+    simple_io_toggle_led    toggle_led;
 };
 
 void bt_simple_io_register_cb(struct bt_simple_io_cb *cb);
