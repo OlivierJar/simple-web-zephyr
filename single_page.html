@@ -157,14 +157,16 @@ const SIMPLE_IO_TOGGLE_CHAR = 'cfe1c61d-25d6-4b43-be51-ddede653f018';
 
 let rgbCharacteristic = null;
 let statusElement = null;
-let ToggleStatus = null;
+let ToggleStatus = null
 const setRGB = (r, g, b) => {
     if (rgbCharacteristic) {
         rgbCharacteristic.writeValueWithoutResponse(new Uint8Array([r, g, b]));
     }
 }
 const handleToggle = (evt) => {
+    console.log("ToggleFunctionCalled")
     if (ToggleStatus){
+        console.log("sending notification")
         ToggleStatus.writeValueWithoutResponse(new Number(1))
     }
 }
@@ -200,6 +202,7 @@ const openDevice = async (device) => {
 
         await startButtonNotifications(service);
         await fetchRGBCharacteristic(service);
+        await fetchToggleStatus(service);
 
         console.log('Connected to device', device);
         statusElement.innerHTML = `Connected to ${device.name}`
