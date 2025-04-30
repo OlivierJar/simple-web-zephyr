@@ -167,7 +167,7 @@ const handleToggle = (evt) => {
     console.log("ToggleFunctionCalled")
     if (ToggleStatus){
         console.log("sending notification")
-        ToggleStatus.writeValueWithoutResponse(new Number(1))
+        ToggleStatus.writeValueWithoutResponse(new Uint8Array([1]))
     }
 }
 const hexToRGB = hex => hex.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
